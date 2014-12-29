@@ -21,5 +21,8 @@ class LibraryTest < Test::Unit::TestCase
     fail('Not implemented')
   end
 
+  def test_get_date
+    assert_equal(0,Calendar.new().get_date())
+  end
 
 end
