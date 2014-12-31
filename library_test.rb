@@ -65,7 +65,7 @@ class LibraryTest < Test::Unit::TestCase
     assert_match("1: East of Eden, by John Steinbeck",@book1.to_s())
   end
 
-  ## tests for Member class (:name, :library, :books, :valid_library_card)
+  ## tests for Member class (:name, :library.rb, :books, :valid_library_card)
 
   def test_get_name
     assert_match("Laura Ho",@member1.get_name())
@@ -91,7 +91,7 @@ class LibraryTest < Test::Unit::TestCase
     #try using mocha to test this method?
   end
 
-  ## tests for Library class (:library, :book_collection, :calendar, :member_hash, :library_closed, :current_member)
+  ## tests for Library class (:library.rb, :book_collection, :calendar, :member_hash, :library_closed, :current_member)
 
   def test_open_raises_exception
     @lib.open()

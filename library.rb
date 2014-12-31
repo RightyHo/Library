@@ -1,3 +1,3 @@
 class Library
-  
+  attr :
 end
