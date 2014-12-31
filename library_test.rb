@@ -1,4 +1,5 @@
 require 'test/unit'
+require_relative "calendar"
 
 class LibraryTest < Test::Unit::TestCase
 
@@ -24,10 +25,6 @@ class LibraryTest < Test::Unit::TestCase
   def test_fail
 
     fail('Not implemented')
-  end
-
-  def teardown
-    ## Nothing really
   end
 
   ## tests for Calendar class (:day_count)
@@ -58,7 +55,7 @@ class LibraryTest < Test::Unit::TestCase
     assert_nil(@book1.get_due_date())
   end
 
-  def test_check_out
+  def test_check_out_book
     @book1.check_out(7)
     assert_equal(7,@book1.get_due_date())
   end
