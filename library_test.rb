@@ -1,5 +1,6 @@
 require 'test/unit'
-require_relative "calendar"
+require_relative "Calendar"
+require_relative "Book"
 
 class LibraryTest < Test::Unit::TestCase
 
@@ -9,9 +10,9 @@ class LibraryTest < Test::Unit::TestCase
     @day_count = Calendar.new()
     @book1 = Book.new(1234,"East of Eden","John Steinbeck")
     @book2 = Book.new(1235,"War and Peace","Leo Tolstoy")
-    @member1 = Member.new("Laura Ho",Library.new())
-    @member2 = Member.new("Jamie O'Regan",Library.new())
-    @lib = Library.new()
+#    @member1 = Member.new("Laura Ho",Library.new())
+#    @member2 = Member.new("Jamie O'Regan",Library.new())
+#    @lib = Library.new()
   end
 
   # Called after every test method runs. Can be used to tear
@@ -19,12 +20,6 @@ class LibraryTest < Test::Unit::TestCase
 
   def teardown
     # Do nothing
-  end
-
-  # Fake test
-  def test_fail
-
-    fail('Not implemented')
   end
 
   ## tests for Calendar class (:day_count)
