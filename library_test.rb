@@ -12,7 +12,7 @@ class LibraryTest < Test::Unit::TestCase
     @book2 = Book.new(1235,"War and Peace","Leo Tolstoy")
     @member1 = Member.new("Laura Ho",Library.new())
     @member2 = Member.new("Jamie O'Regan",Library.new())
-#    @lib = Library.new()
+    @lib = Library.new()
   end
 
   # Called after every test method runs. Can be used to tear
