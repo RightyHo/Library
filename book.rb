@@ -1,5 +1,6 @@
 class Book
   attr :id, :title, :author, :due_date
+
   def initialize(id,title,author)
     @id = id
     @title = title
