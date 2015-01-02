@@ -41,6 +41,35 @@ class Library
   end
 
   def find_all_overdue_books()
-
+    found_overdue = false
+    @member_hash.each do |name,member|
+      unless member.nil?
+        member.getbooks().each do |book|
+          if(book.get_due_date() < @calendar)
+            printf "%-20s %s\n", name, book.to_s()
+            found_overdue = true
+          end
+        end
+      else
+        raise 'Error - the member object you are trying to check is nil'
+      end
+    end
+    puts 'No books are overdue.' unless found_overdue
   end
+
+  def issue_card(name_of_member)
+    raise 'The library is not open' unless @library_open
+    if @member_hash.has_key?(name_of_member)
+      mem = @member_hash.fetch(name_of_member)
+      if(mem.valid_library_card)
+        return "#{name_of_member} already has a library card."
+      else
+        mem.valid_library_card = true
+        return "Library card issued to #{name_of_member}."
+      end
+    else
+      raise 'Error - this person is not on the member_hash list!'
+    end
+  end
+
 end
