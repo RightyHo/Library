@@ -1,11 +1,12 @@
 class Member
-  attr :name, :library, :books, :valid_library_card
+  attr :name, :library, :books,
+  attr_accessor :valid_library_card
 
   def initialize(name,library)
     @name = name
     @library = library
     @books = Set.new()
-    @valid_library_card = true
+    @valid_library_card = false
   end
 
   def get_name()
@@ -47,4 +48,5 @@ class Member
   def send_overdue_notice(notice)
     puts "#{@name}: #{notice}"
   end
+  
 end
