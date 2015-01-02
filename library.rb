@@ -101,5 +101,44 @@ class Library
     puts 'None.' unless found_overdue
   end
 
+  def check_in(*book_numbers) # * = 1..n of book numbers
+    raise 'The library is not open.' unless @library_open
+    raise 'No member is currently being served.' if @current_member.nil?
+    book_numbers.each do |bknum|
+      book_found = false
+      @current_member.get_books().each do |bk|
+        if(bk.get_id() == bknum)
+          book_found = true
+          @current_member.give_back(bk)
+          @book_collection.add(bk)
+        end
+      end
+      raise "The member does not have book #{bknum}." unless book_found
+    end
+    return "#{@current_member.get_name()} has returned #{book_numbers.size()} books."
+  end
+
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end
