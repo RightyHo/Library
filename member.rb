@@ -48,5 +48,5 @@ class Member
   def send_overdue_notice(notice)
     puts "#{@name}: #{notice}"
   end
-  
+
 end
