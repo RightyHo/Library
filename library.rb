@@ -41,6 +41,7 @@ class Library
   end
 
   def find_all_overdue_books()
+    raise 'This library has no members and thus has no over due books' if @member_hash.empty?
     found_overdue = false
     @member_hash.each do |name,member|
       unless member.nil?

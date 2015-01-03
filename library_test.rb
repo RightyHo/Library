@@ -1,4 +1,5 @@
 require 'test/unit'
+require 'Set'
 require_relative "Calendar"
 require_relative "Book"
 require_relative "Member"
@@ -74,15 +75,21 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_check_out
+    @member1.library_card = true
     @member1.check_out(@book1)
-    assert_equal(@book1,@member1.get_books())
+    expected = Set.new()
+    expected.add(@book1)
+    assert_equal(expected,@member1.get_books())
   end
 
   def test_give_back
+    @member2.library_card = true
     @member2.check_out(@book1)
     @member2.check_out(@book2)
     @member2.give_back(@book1)
-    assert_equal(@book2,@member1.get_books())
+    expected = Set.new()
+    expected.add(@book2)
+    assert_equal(expected,@member2.get_books())
   end
 
   def test_get_books
