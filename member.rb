@@ -22,7 +22,7 @@ class Member
           puts "Error - member: #{@name} cannot check out this book because he/she has already checked out the max number of books (3)!"
         end
       else
-        puts "Error - member: #{@name} cannot check out this book because he/she does not have a valid library.rb card!"
+        puts "Error - member: #{@name} cannot check out this book because he/she does not have a valid library card!"
       end
     else
       puts 'Error - the book that you are trying to check out is NIL'
