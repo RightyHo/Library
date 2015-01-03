@@ -1,12 +1,12 @@
 class Member
-  attr :name, :library, :books,
-  attr_accessor :valid_library_card
+  attr :name, :library, :books
+  attr_accessor :library_card
 
   def initialize(name,library)
     @name = name
     @library = library
     @books = Set.new()
-    @valid_library_card = false
+    @library_card = false
   end
 
   def get_name()
@@ -15,7 +15,7 @@ class Member
 
   def check_out(book)
     unless book.nil?
-      if(@valid_library_card)
+      if(@library_card)
         if(books.size() < 3)
           books.add(book)
         else

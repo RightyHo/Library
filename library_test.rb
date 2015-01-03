@@ -1,18 +1,20 @@
 require 'test/unit'
 require_relative "Calendar"
 require_relative "Book"
+require_relative "Member"
+require_relative "Library"
 
 class LibraryTest < Test::Unit::TestCase
 
   # Called before every test method runs. Can be used
   # to set up fixture information.
   def setup
-    @day_count = Calendar.new()
+    @lib = Library.new()
     @book1 = Book.new(1234,"East of Eden","John Steinbeck")
     @book2 = Book.new(1235,"War and Peace","Leo Tolstoy")
     @member1 = Member.new("Laura Ho",Library.new())
     @member2 = Member.new("Jamie O'Regan",Library.new())
-    @lib = Library.new()
+    @day_count = Calendar.new()
   end
 
   # Called after every test method runs. Can be used to tear
@@ -62,10 +64,10 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_to_s
-    assert_match("1: East of Eden, by John Steinbeck",@book1.to_s())
+    assert_match("1234: East of Eden, by John Steinbeck",@book1.to_s())
   end
 
-  ## tests for Member class (:name, :library.rb, :books, :valid_library_card)
+  ## tests for Member class (:name, :library.rb, :books, :library_card)
 
   def test_get_name
     assert_match("Laura Ho",@member1.get_name())
@@ -95,8 +97,8 @@ class LibraryTest < Test::Unit::TestCase
 
   def test_open_raises_exception
     @lib.open()
-    @lib.open()
-    assert_raise(LibraryAlreadyOpenError)
+    exception = assert_raise(RuntimeError) {@lib.open()}
+    assert_equal('The library is already open!',exception.message)
   end
 
   def test_open_advances_calendar
@@ -107,7 +109,7 @@ class LibraryTest < Test::Unit::TestCase
 
   def test_open_sets_flag_to_open
     @lib.open()
-    assert(@lib.library_closed == false)
+    assert(@lib.library_open == true)
   end
 
   def test_find_all_overdue_books_none

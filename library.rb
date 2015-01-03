@@ -9,7 +9,7 @@ class Library
     if File.exists?(filename)
       id = 1
       @book_collection = Set.new()
-      file = File.open(filename,r)
+      file = File.open(filename,mode="r")
       while !file.eof?
         line = file.readline
         line = line[1,line.length-2]
@@ -61,10 +61,10 @@ class Library
     raise 'The library is not open.' unless @library_open
     if @member_hash.has_key?(name_of_member)
       mem = @member_hash.fetch(name_of_member)
-      if(mem.valid_library_card)
+      if(mem.library_card)
         return "#{name_of_member} already has a library card."
       else
-        mem.valid_library_card = true
+        mem.library_card = true
         return "Library card issued to #{name_of_member}."
       end
     else
@@ -76,7 +76,7 @@ class Library
     raise 'The library is not open.' unless @library_open
     if @member_hash.has_key?(name_of_member)
       mem = @member_hash.fetch(name_of_member)
-      if(mem.valid_library_card)
+      if(mem.library_card)
         @current_member = mem
         return "Now serving #{name_of_member}."
       else
@@ -118,6 +118,9 @@ class Library
     return "#{@current_member.get_name()} has returned #{book_numbers.size()} books."
   end
 
+  def search(string)
+
+  end
   
 
 
