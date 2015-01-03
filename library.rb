@@ -12,7 +12,7 @@ class Library
       file = File.open(filename,mode="r")
       while !file.eof?
         line = file.readline
-        line = line[1,line.length-2]
+        line = line[1,line.length-3]
         split_line = line.split(",",2)
         title = split_line[0]
         author = split_line[1]

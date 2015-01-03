@@ -128,4 +128,11 @@ class LibraryTest < Test::Unit::TestCase
     assert_equal("No books are overdue.",@lib.find_all_overdue_books())
   end
 
+  def test_library_constructor_reads_file
+    books_from_file = @lib.book_collection
+    books_from_file.each do |print_book|
+      puts print_book.to_s()
+    end
+  end
+
 end
