@@ -59,6 +59,7 @@ class Library
   end
 
   def issue_card(name_of_member)
+    raise ArgumentError.new 'The name of the member to whom you tried to issue a card was nil' if name_of_member.nil?
     raise 'The library is not open.' unless @library_open
     if @member_hash.has_key?(name_of_member)
       mem = @member_hash.fetch(name_of_member)
@@ -77,6 +78,7 @@ class Library
   end
 
   def serve(name_of_member)
+    raise ArgumentError.new 'The name of the member you tried to serve was nil' if name_of_member.nil?
     raise 'The library is not open.' unless @library_open
     if @member_hash.has_key?(name_of_member)
       mem = @member_hash.fetch(name_of_member)
@@ -110,6 +112,7 @@ class Library
   #2. check_in the books by the numbers given above.
 
   def check_in(*book_numbers) # * = 1..n of book numbers
+    raise ArgumentError.new 'The book numbers you tried to check in were nil' if book_numbers.nil?
     raise 'The library is not open.' unless @library_open
     raise 'No member is currently being served.' if @current_member.nil?
     book_numbers.each do |bknum|
@@ -127,7 +130,8 @@ class Library
   end
 
   def search(string)
-    #add code
+    raise ArgumentError.new 'Your search string was nil' if string.nil?
+
   end
 
   #To check books out:
@@ -137,10 +141,12 @@ class Library
   #4. If more books are desired, you can do another search.
 
   def check_out(*book_ids)  # 1..n book_ids
+    raise ArgumentError.new 'The book IDs you tried to check out were nil' if book_ids.nil?
     #add code
   end
 
   def renew(*book_ids)  #1..n book_ids
+    raise ArgumentError.new 'The book IDs you tried to renew were nil' if book_ids.nil?
     #add code
   end
 

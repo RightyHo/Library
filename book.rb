@@ -25,6 +25,7 @@ class Book
   end
 
   def check_out(due_date)
+    raise ArgumentError.new 'The due date you are trying to set for this book is nil.' if due_date.nil?
     @due_date = due_date
   end
 
