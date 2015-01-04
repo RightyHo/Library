@@ -19,6 +19,7 @@ class LibraryTest < Test::Unit::TestCase
     @lib.issue_card('Cat Murdoch')
     @lib.issue_card('Amy Webb')
     @lib.issue_card('Kate Barker')
+
     @book1 = Book.new(1234,"East of Eden","John Steinbeck")
     @book2 = Book.new(1235,"War and Peace","Leo Tolstoy")
     @member1 = Member.new("Laura Ho",@lib)
@@ -138,14 +139,23 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_find_all_overdue_books_none
-    assert_equal("No books are overdue.",@lib.find_all_overdue_books())
+    #add code
+    @lib.find_all_overdue_books()
   end
 
   def test_find_all_overdue_books_some
-
-    assert_equal("No books are overdue.",@lib.find_all_overdue_books())
+    #add code
   end
 
-
+  def test_issue_card
+    @lib.member_hash.each do |mem_name,mem_obj|
+      puts "#{mem_name} is a member of this library!"
+    end
+    assert_equal('Matt Swinson already has a library card.',@lib.issue_card('Matt Swinson'))
+    assert_equal('Library card issued to Aaron Morgan.',@lib.issue_card('Aaron Morgan'))
+    @lib.close()
+    exception = assert_raise(RuntimeError) {@lib.issue_card('Andrew Ho')}
+    assert_equal('The library is not open.',exception.message)
+  end
 
 end
