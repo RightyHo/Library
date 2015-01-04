@@ -11,6 +11,14 @@ class LibraryTest < Test::Unit::TestCase
   # to set up fixture information.
   def setup
     @lib = Library.new()
+    @lib.open()
+    @lib.issue_card('Wade Kelly')
+    @lib.issue_card('Travis Wallach')
+    @lib.issue_card('Matt Swinson')
+    @lib.issue_card('Kate Edwards')
+    @lib.issue_card('Cat Murdoch')
+    @lib.issue_card('Amy Webb')
+    @lib.issue_card('Kate Barker')
     @book1 = Book.new(1234,"East of Eden","John Steinbeck")
     @book2 = Book.new(1235,"War and Peace","Leo Tolstoy")
     @member1 = Member.new("Laura Ho",@lib)
@@ -102,19 +110,29 @@ class LibraryTest < Test::Unit::TestCase
 
   ## tests for Library class (:library.rb, :book_collection, :calendar, :member_hash, :library_closed, :current_member)
 
+  def test_library_constructor_set_up
+    books_from_file = @lib.book_collection
+    books_from_file.each do |print_book|
+      puts print_book.to_s()
+    end
+    puts "Calendar date set to: #{@lib.calendar.get_date()}"
+    puts 'An empty member hash dictionary has been set up' if @lib.member_hash.empty?
+  end
+
   def test_open_raises_exception
-    @lib.open()
     exception = assert_raise(RuntimeError) {@lib.open()}
     assert_equal('The library is already open!',exception.message)
   end
 
   def test_open_advances_calendar
     prev_day = @lib.calendar.get_date()
+    @lib.close()
     @lib.open()
     assert(prev_day < @lib.calendar.get_date())
   end
 
   def test_open_sets_flag_to_open
+    @lib.close()
     @lib.open()
     assert(@lib.library_open == true)
   end
@@ -128,11 +146,6 @@ class LibraryTest < Test::Unit::TestCase
     assert_equal("No books are overdue.",@lib.find_all_overdue_books())
   end
 
-  def test_library_constructor_reads_file
-    books_from_file = @lib.book_collection
-    books_from_file.each do |print_book|
-      puts print_book.to_s()
-    end
-  end
+
 
 end

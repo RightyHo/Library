@@ -45,7 +45,7 @@ class Library
     found_overdue = false
     @member_hash.each do |name,member|
       unless member.nil?
-        member.getbooks().each do |book|
+        member.get_books().each do |book|
           if(book.get_due_date() < @calendar)
             printf "%-20s %s\n", name, book.to_s()
             found_overdue = true
@@ -123,9 +123,27 @@ class Library
   end
 
   def search(string)
-
+    #add code
   end
-  
+
+  def check_out(*book_ids)  # 1..n book_ids
+    #add code
+  end
+
+  def renew(*book_ids)  #1..n book_ids
+    #add code
+  end
+
+  def close()
+    raise 'The library is not open.' unless @library_open
+    @library_open = false
+    return 'Good night.'
+  end
+
+  def quit()
+    #add code
+  end
+
 
 
 
