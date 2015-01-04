@@ -139,8 +139,8 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_find_all_overdue_books_none
-    #add code
     @lib.find_all_overdue_books()
+    #add code
   end
 
   def test_find_all_overdue_books_some
@@ -153,6 +153,8 @@ class LibraryTest < Test::Unit::TestCase
     end
     assert_equal('Matt Swinson already has a library card.',@lib.issue_card('Matt Swinson'))
     assert_equal('Library card issued to Aaron Morgan.',@lib.issue_card('Aaron Morgan'))
+    assert_equal(@lib,@lib.member_hash['Aaron Morgan'].library)
+    assert_equal('Aaron Morgan',@lib.member_hash['Aaron Morgan'].get_name())
     @lib.close()
     exception = assert_raise(RuntimeError) {@lib.issue_card('Andrew Ho')}
     assert_equal('The library is not open.',exception.message)
@@ -166,4 +168,40 @@ class LibraryTest < Test::Unit::TestCase
     assert_equal('Now serving Kate Edwards.',@lib.serve('Kate Edwards'))
     assert_equal('Linsey Simpson does not have a library card.',@lib.serve('Linsey Simpson'))
   end
+
+  def test_find_overdue_books
+    #add code
+  end
+
+  def test_library_check_in
+    #add code
+  end
+
+  def test_search
+    #add code
+  end
+
+  def test_library_check_out
+    #add code
+  end
+
+  def test_renew
+    #add code
+  end
+
+  def test_close_throws_exception
+    @lib.close()
+    exception = assert_raise (RuntimeError){@lib.close()}
+    assert_equal('The library is not open.',exception.message)
+  end
+
+  def test_close
+    assert_equal('Good night.',@lib.close())
+  end
+
+  def test_quit
+    assert_equal('The library is now closed for renovations.',@lib.quit())
+    assert(@lib.library_open == false)
+  end
+
 end

@@ -87,7 +87,7 @@ class Library
         return "#{name_of_member} does not have a library card."
       end
     else
-      raise 'Error - this person is not on the member_hash list!'
+      return "#{name_of_member} does not have a library card."
     end
   end
 
@@ -104,6 +104,10 @@ class Library
     end
     puts 'None.' unless found_overdue
   end
+
+  #To check books in:
+  #1. If you have not already done so, serve the member. This will print a numbered list of books checked out to that member.
+  #2. check_in the books by the numbers given above.
 
   def check_in(*book_numbers) # * = 1..n of book numbers
     raise 'The library is not open.' unless @library_open
@@ -126,6 +130,12 @@ class Library
     #add code
   end
 
+  #To check books out:
+  #1. If you have not already done so, serve the member. You can ignore the list of books that this will print out.
+  #2. search for a book wanted by the member (unless you already know its id).
+  #3. check_out zero or more books by the numbers returned from the search command.
+  #4. If more books are desired, you can do another search.
+
   def check_out(*book_ids)  # 1..n book_ids
     #add code
   end
@@ -141,29 +151,8 @@ class Library
   end
 
   def quit()
-    #add code
+    @library_open = false
+    return 'The library is now closed for renovations.'
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 end
