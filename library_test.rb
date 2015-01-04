@@ -113,11 +113,12 @@ class LibraryTest < Test::Unit::TestCase
 
   def test_library_constructor_set_up
     books_from_file = @lib.book_collection
+    puts 'Initial library book collection:'
     books_from_file.each do |print_book|
       puts print_book.to_s()
     end
-    puts "Calendar date set to: #{@lib.calendar.get_date()}"
-    puts 'An empty member hash dictionary has been set up' if @lib.member_hash.empty?
+    assert_equal(1,@lib.calendar.get_date())
+    assert(!@lib.member_hash.empty?)
   end
 
   def test_open_raises_exception
@@ -139,7 +140,6 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_find_all_overdue_books_none
-    @lib.find_all_overdue_books()
     #add code
   end
 
@@ -148,6 +148,7 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_issue_card
+    puts 'Initial library member list:'
     @lib.member_hash.each do |mem_name,mem_obj|
       puts "#{mem_name} is a member of this library!"
     end
@@ -178,7 +179,10 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_search
-    #add code
+    assert_equal('Search string must contain at least four characters.',@lib.search('and'))
+    assert_equal('No books found.',@lib.search('uvwxyz'))
+    assert(@lib.search('Flew Over').include? "Ken Kesey")
+    assert(@lib.search('joy luck').include? "The Joy Luck Club")
   end
 
   def test_library_check_out
