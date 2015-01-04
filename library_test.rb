@@ -158,4 +158,12 @@ class LibraryTest < Test::Unit::TestCase
     assert_equal('The library is not open.',exception.message)
   end
 
+  def test_serve
+    @lib.close()
+    exception = assert_raise(RuntimeError) {@lib.serve('Kate Edwards')}
+    assert_equal('The library is not open.',exception.message)
+    @lib.open()
+    assert_equal('Now serving Kate Edwards.',@lib.serve('Kate Edwards'))
+    assert_equal('Linsey Simpson does not have a library card.',@lib.serve('Linsey Simpson'))
+  end
 end
