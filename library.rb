@@ -131,7 +131,19 @@ class Library
 
   def search(string)
     raise ArgumentError.new 'Your search string was nil' if string.nil?
+    result = ''
+    if(string.length < 4)
+      return 'Search string must contain at least four characters.'
+    else
+      @book_collection.each do |book_to_check|
+        check_title = book_to_check.get_title().downcase()
+        check_author = book_to_check.get_author().downcase()
+        if((check_title.include?(string.downcase) || check_author.include?(string.downcase))
+          result.concat("#{book_to_check.to_s()} \n") unless result.include? "#{book_to_check.get_title}, by #{book_to_check.get_author}"
 
+        end
+      end
+    end
   end
 
   #To check books out:
