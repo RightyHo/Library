@@ -138,10 +138,14 @@ class Library
       @book_collection.each do |book_to_check|
         check_title = book_to_check.get_title().downcase()
         check_author = book_to_check.get_author().downcase()
-        if((check_title.include?(string.downcase) || check_author.include?(string.downcase))
-          result.concat("#{book_to_check.to_s()} \n") unless result.include? "#{book_to_check.get_title}, by #{book_to_check.get_author}"
-
+        if(check_title.include?(string.downcase) || check_author.include?(string.downcase))
+          result.concat("#{book_to_check.to_s()}\n") unless result.include?("#{book_to_check.get_title()}, by #{book_to_check.get_author()}")
         end
+      end
+      if(result == '')
+        return 'No books found.'
+      else
+        return result
       end
     end
   end
@@ -172,5 +176,4 @@ class Library
     @library_open = false
     return 'The library is now closed for renovations.'
   end
-
 end
