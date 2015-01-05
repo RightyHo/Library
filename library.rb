@@ -77,6 +77,8 @@ class Library
     end
   end
 
+  #Do I need to make this method print a numbered list of books checked out to that member?
+
   def serve(name_of_member)
     raise ArgumentError.new 'The name of the member you tried to serve was nil' if name_of_member.nil?
     raise 'The library is not open.' unless @library_open
@@ -158,7 +160,20 @@ class Library
 
   def check_out(*book_ids)  # 1..n book_ids
     raise ArgumentError.new 'The book IDs you tried to check out were nil' if book_ids.nil?
-    #add code
+    raise 'The library is not open.' unless @library_open
+    raise 'No member is currently being served.' if @current_member.nil?
+    book_ids.each do |id|
+      found_book = false
+      @book_collection.each do |book|
+        if(book.get_id() == id)
+          @current_member.check_out(book)
+          @book_collection.delete(book)
+          found_book = true
+        end
+      end
+      raise "The library does not have book #{id}." unless found_book
+    end
+    return "#{book_ids.size()} books have been checked out to #{@current_member.get_name()}"
   end
 
   def renew(*book_ids)  #1..n book_ids
