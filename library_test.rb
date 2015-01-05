@@ -183,6 +183,8 @@ class LibraryTest < Test::Unit::TestCase
     assert_equal('No books found.',@lib.search('uvwxyz'))
     assert(@lib.search('Flew Over').include? "Ken Kesey")
     assert(@lib.search('joy luck').include? "The Joy Luck Club")
+    puts "Testing search on the string - mark:"
+    puts "#{@lib.search('mark')}"
   end
 
   def test_library_check_out
