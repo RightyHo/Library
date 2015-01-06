@@ -178,6 +178,11 @@ class Library
 
   def renew(*book_ids)  #1..n book_ids
     raise ArgumentError.new 'The book IDs you tried to renew were nil' if book_ids.nil?
+    raise 'The library is not open.' unless @library_open
+    raise 'No member is currently being served.' if @current_member.nil?
+    book_ids.each do |id|
+
+    end
     #add code
   end
 

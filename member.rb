@@ -18,6 +18,7 @@ class Member
     if(@library_card)
       if(books.size() < 3)
         books.add(book)
+        book.check_out(@library.calendar + 7)
       else
         puts "Error - member: #{@name} cannot check out this book because he/she has already checked out the max number of books (3)!"
       end
@@ -29,6 +30,7 @@ class Member
   def give_back(book)
     raise ArgumentError.new 'The book that you are trying to give back is nil.' if book.nil?
     if(@books.include?(book))
+      book.check_in()
       @books.delete(book)
     else
        puts 'Error - the book you are trying to give back is not currently checked out by this member'
