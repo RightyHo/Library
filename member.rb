@@ -16,9 +16,9 @@ class Member
   def check_out(book)
     raise ArgumentError.new 'The book that you are trying to check out is nil.' if book.nil?
     if(@library_card)
-      if(books.size() < 3)
-        books.add(book)
-        book.check_out(@library.calendar + 7)
+      if(@books.size() < 3)
+        @books.add(book)
+        book.check_out(@library.calendar.get_date() + 7)
       else
         puts "Error - member: #{@name} cannot check out this book because he/she has already checked out the max number of books (3)!"
       end

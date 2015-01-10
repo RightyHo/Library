@@ -85,10 +85,12 @@ class LibraryTest < Test::Unit::TestCase
 
   def test_check_out
     @member1.library_card = true
+    expected_due_date = @lib.calendar.get_date() + 7
     @member1.check_out(@book1)
     expected = Set.new()
     expected.add(@book1)
     assert_equal(expected,@member1.get_books())
+    assert_equal(expected_due_date,@book1.get_due_date())
   end
 
   def test_give_back

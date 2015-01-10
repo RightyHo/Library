@@ -77,8 +77,6 @@ class Library
     end
   end
 
-  #Do I need to make this method print a numbered list of books checked out to that member?
-
   def serve(name_of_member)
     raise ArgumentError.new 'The name of the member you tried to serve was nil' if name_of_member.nil?
     raise 'The library is not open.' unless @library_open
@@ -86,6 +84,9 @@ class Library
       mem = @member_hash.fetch(name_of_member)
       if(mem.library_card)
         @current_member = mem
+        @current_member.get_books().each do |bk|
+          puts "#{bk.to_s()} is currently checked out to member: #{name_of_member}."
+        end
         return "Now serving #{name_of_member}."
       else
         return "#{name_of_member} does not have a library card."
