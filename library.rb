@@ -46,7 +46,7 @@ class Library
     @member_hash.each do |name,member|
       unless member.nil?
         member.get_books().each do |book|
-          if(book.get_due_date() < @calendar)
+          if(book.get_due_date() < @calendar.get_date())
             printf "%-20s %s\n", name, book.to_s()
             found_overdue = true
           end
