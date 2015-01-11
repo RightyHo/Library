@@ -184,7 +184,32 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_library_check_in
-    #add code
+    #test exceptions are raised
+    @lib.close()
+    exception = assert_raise (RuntimeError){@lib.check_in(23,56)}
+    assert_equal('The library is not open.',exception.message)
+    @lib.open()
+    exception = assert_raise (RuntimeError){@lib.check_in(23,56)}
+    assert_equal('No member is currently being served.',exception.message)
+    @lib.serve('Kate Barker')
+    @lib.check_out(56)
+    exception = assert_raise (RuntimeError){@lib.check_in(23,56)}
+    assert_equal('The member does not have book 23.',exception.message)
+    #test that book is returned to the library book collection, the book is set to checked in and it is removed from the members books
+    book33 = nil
+    @lib.book_collection.each do |book|
+      if(book.get_id() == 33)
+        book33 = book
+      end
+    end
+    @lib.serve('Travis Wallach')
+    @lib.check_out(33,44,55)
+    assert_equal('Travis Wallach has returned 2 books.',@lib.check_in(33,44))
+    exception = assert_raise (RuntimeError){@lib.check_in(33)}
+    assert_equal('The member does not have book 33.',exception.message)
+    assert(!@lib.current_member.get_books().include?(book33))
+    assert(@lib.book_collection.include?(book33))
+    assert_nil(book33.get_due_date())
   end
 
   def test_search
@@ -199,7 +224,7 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_library_check_out
-    #test exceptions
+    #test exceptions are raised
     @lib.close()
     exception = assert_raise (RuntimeError){@lib.check_out(23,56)}
     assert_equal('The library is not open.',exception.message)
@@ -209,7 +234,7 @@ class LibraryTest < Test::Unit::TestCase
     @lib.serve('Kate Barker')
     exception = assert_raise (RuntimeError){@lib.check_out(23,56,7777)}
     assert_equal('The library does not have book 7777.',exception.message)
-    #test book is removed from library book collection and added to the members books
+    #test that book is removed from library book collection and added to the members books
     book33 = nil
     @lib.book_collection.each do |book|
       if(book.get_id() == 33)
@@ -217,14 +242,46 @@ class LibraryTest < Test::Unit::TestCase
       end
     end
     @lib.serve('Travis Wallach')
-    assert_equal('3 books have been checked out to Travis Wallach',@lib.check_out(22,33,44))
+    assert_equal('3 books have been checked out to Travis Wallach.',@lib.check_out(22,33,44))
     exception = assert_raise (RuntimeError){@lib.check_out(33)}
     assert_equal('The library does not have book 33.',exception.message)
     assert(@lib.current_member.get_books().include?(book33))
   end
 
   def test_renew
-    #add code
+    #test exceptions are raised
+    @lib.close()
+    exception = assert_raise (RuntimeError){@lib.renew(23,56)}
+    assert_equal('The library is not open.',exception.message)
+    @lib.open()
+    exception = assert_raise (RuntimeError){@lib.renew(23,56)}
+    assert_equal('No member is currently being served.',exception.message)
+    @lib.serve('Kate Barker')
+    @lib.check_out(56)
+    exception = assert_raise (RuntimeError){@lib.renew(23,56)}
+    assert_equal('The member does not have book 23.',exception.message)
+    #test that renewed book's due date is set to today's date plus 7
+    book33 = nil
+    @lib.book_collection.each do |book|
+      if(book.get_id() == 33)
+        book33 = book
+      end
+    end
+    @lib.serve('Travis Wallach')
+    @lib.check_out(33,44,55)
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    expected_due_date = book33.get_due_date() + 7
+    @lib.renew(33,44)
+#    assert_equal(expected_due_date,book33.get_due_date())
+    assert(@lib.current_member.get_books().include?(book33))
+    assert(!@lib.book_collection.include?(book33))
   end
 
   def test_close_throws_exception

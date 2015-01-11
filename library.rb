@@ -174,7 +174,7 @@ class Library
       end
       raise "The library does not have book #{id}." unless found_book
     end
-    return "#{book_ids.size()} books have been checked out to #{@current_member.get_name()}"
+    return "#{book_ids.size()} books have been checked out to #{@current_member.get_name()}."
   end
 
   def renew(*book_ids)  #1..n book_ids
@@ -182,9 +182,16 @@ class Library
     raise 'The library is not open.' unless @library_open
     raise 'No member is currently being served.' if @current_member.nil?
     book_ids.each do |id|
-
+      found_book = false
+      @current_member.get_books().each do |book|
+        if(book.get_id() == id)
+          book.check_out(@calendar.get_date() + 7)
+          found_book = true
+        end
+      end
+      raise "The member does not have book #{id}." unless found_book
     end
-    #add code
+    return "#{book_ids.size()} books have been renewed for #{@current_member.get_name()}."
   end
 
   def close()
