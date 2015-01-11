@@ -170,6 +170,11 @@ class LibraryTest < Test::Unit::TestCase
     @lib.open()
     assert_equal('Now serving Kate Edwards.',@lib.serve('Kate Edwards'))
     assert_equal('Linsey Simpson does not have a library card.',@lib.serve('Linsey Simpson'))
+    #check that serve() prints out a list of currently checked out books to the member
+    @lib.serve('Amy Webb')
+    @lib.check_out(44,17,74)
+    @lib.serve('Matt Swinson')
+    puts "#{@lib.serve('Amy Webb')}"
   end
 
   def test_find_overdue_books
