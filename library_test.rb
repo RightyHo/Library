@@ -115,6 +115,7 @@ class LibraryTest < Test::Unit::TestCase
 
   def test_library_constructor_set_up
     books_from_file = @lib.book_collection
+    puts ''
     puts 'Initial library book collection:'
     books_from_file.each do |print_book|
       puts print_book.to_s()
@@ -150,6 +151,7 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_issue_card
+    puts ''
     puts 'Initial library member list:'
     @lib.member_hash.each do |mem_name,mem_obj|
       puts "#{mem_name} is a member of this library!"
@@ -190,12 +192,35 @@ class LibraryTest < Test::Unit::TestCase
     assert_equal('No books found.',@lib.search('uvwxyz'))
     assert(@lib.search('Flew Over').include? "Ken Kesey")
     assert(@lib.search('joy luck').include? "The Joy Luck Club")
+    puts ''
     puts "Testing search on the string - mark:"
     puts "#{@lib.search('mark')}"
+    puts ''
   end
 
   def test_library_check_out
-    #add code
+    #test exceptions
+    @lib.close()
+    exception = assert_raise (RuntimeError){@lib.check_out(23,56)}
+    assert_equal('The library is not open.',exception.message)
+    @lib.open()
+    exception = assert_raise (RuntimeError){@lib.check_out(23,56)}
+    assert_equal('No member is currently being served.',exception.message)
+    @lib.serve('Kate Barker')
+    exception = assert_raise (RuntimeError){@lib.check_out(23,56,7777)}
+    assert_equal('The library does not have book 7777.',exception.message)
+    #test book is removed from library book collection and added to the members books
+    book33 = nil
+    @lib.book_collection.each do |book|
+      if(book.get_id() == 33)
+        book33 = book
+      end
+    end
+    @lib.serve('Travis Wallach')
+    assert_equal('3 books have been checked out to Travis Wallach',@lib.check_out(22,33,44))
+    exception = assert_raise (RuntimeError){@lib.check_out(33)}
+    assert_equal('The library does not have book 33.',exception.message)
+    assert(@lib.current_member.get_books().include?(book33))
   end
 
   def test_renew
