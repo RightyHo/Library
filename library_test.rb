@@ -108,7 +108,8 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_send_overdue_notice
-    #try using mocha to test this method?
+    exception = assert_raise(ArgumentError) {@member1.send_overdue_notice(nil)}
+    assert_equal('The overdue notice you are trying to send is nil.',exception.message)
   end
 
   ## tests for Library class (:library.rb, :book_collection, :calendar, :member_hash, :library_closed, :current_member)
