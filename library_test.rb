@@ -277,9 +277,9 @@ class LibraryTest < Test::Unit::TestCase
     @lib.open()
     @lib.close()
     @lib.open()
-    expected_due_date = book33.get_due_date() + 7
+    expected_due_date = @lib.calendar.get_date() + 7
     @lib.renew(33,44)
-#    assert_equal(expected_due_date,book33.get_due_date())
+    assert_equal(expected_due_date,book33.get_due_date())
     assert(@lib.current_member.get_books().include?(book33))
     assert(!@lib.book_collection.include?(book33))
   end
