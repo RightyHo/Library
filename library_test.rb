@@ -159,11 +159,37 @@ class LibraryTest < Test::Unit::TestCase
     @lib.open()
     @lib.close()
     @lib.open()
-    puts "Expected String:  No books are overdue.  Actual String: #{@lib.find_all_overdue_books()}."
+    puts "Expected String:  \"No books are overdue.\"  Actual String:"
+    @lib.find_all_overdue_books()
   end
 
   def test_find_all_overdue_books_some
-    #add code
+    @lib.serve('Kate Edwards')
+    @lib.check_out(7,17,27)
+    @lib.serve('Wade Kelly')
+    @lib.check_out(34,44,54)
+    @lib.serve('Cat Murdoch')
+    @lib.check_out(49,59,69)
+    #move forward 8 days
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    puts "Expected List of Overdue Book Numbers:  7,17,27,34,44,54,49,59,69."
+    puts "Actual Output List:"
+    @lib.find_all_overdue_books()
   end
 
   def test_issue_card
