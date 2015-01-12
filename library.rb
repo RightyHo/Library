@@ -100,9 +100,9 @@ class Library
     raise 'The library is not open.' unless @library_open
     raise 'No member is currently being served.' if @current_member.nil?
     found_overdue = false
-    puts "Books currently overdue for member: #{@current_member}.\n"
+    puts "Books currently overdue for member: #{@current_member.get_name()}.\n"
     @current_member.get_books().each do |book|
-      if(book.get_due_date() < @calendar)
+      if(book.get_due_date() < @calendar.get_date())
         puts "#{book.to_s()}.\n"
         found_overdue = true
       end

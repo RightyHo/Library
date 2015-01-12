@@ -159,6 +159,7 @@ class LibraryTest < Test::Unit::TestCase
     @lib.open()
     @lib.close()
     @lib.open()
+    puts ''
     puts "Expected String:  \"No books are overdue.\"  Actual String:"
     @lib.find_all_overdue_books()
   end
@@ -187,6 +188,7 @@ class LibraryTest < Test::Unit::TestCase
     @lib.open()
     @lib.close()
     @lib.open()
+    puts ''
     puts "Expected List of Overdue Book Numbers:  7,17,27,34,44,54,49,59,69."
     puts "Actual Output List:"
     @lib.find_all_overdue_books()
@@ -222,7 +224,49 @@ class LibraryTest < Test::Unit::TestCase
   end
 
   def test_find_overdue_books
-    #add code
+    #test exceptions are raised
+    @lib.close()
+    exception = assert_raise (RuntimeError){@lib.find_overdue_books()}
+    assert_equal('The library is not open.',exception.message)
+    @lib.open()
+    exception = assert_raise (RuntimeError){@lib.find_overdue_books()}
+    assert_equal('No member is currently being served.',exception.message)
+    #test method works with correct set up
+    @lib.serve('Kate Edwards')
+    @lib.check_out(7,17,27)
+    @lib.serve('Wade Kelly')
+    @lib.check_out(34,44,54)
+    @lib.serve('Cat Murdoch')
+    @lib.check_out(49,59,69)
+    #move forward 2 days
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.serve('Wade Kelly')
+    puts ''
+    puts 'Expected Output after 2 days:  '
+    puts "\"Books currently overdue for member: Wade Kelly."
+    puts "None.\""
+    puts 'Actual String:'
+    @lib.find_overdue_books()
+    #move forward 6 days
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    @lib.close()
+    @lib.open()
+    puts ''
+    puts 'Expected List of Overdue Book Numbers after 8 Days:  34,44,54.'
+    puts 'Actual Output List:'
+    @lib.find_overdue_books()
   end
 
   def test_library_check_in
