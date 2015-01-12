@@ -105,11 +105,24 @@ class LibraryTest < Test::Unit::TestCase
 
   def test_get_books
     assert(@member1.get_books().empty?)
+    @member1.library_card = true
+    @member1.check_out(@book1)
+    @member1.check_out(@book2)
+    expected = Set.new()
+    expected.add(@book1)
+    expected.add(@book2)
+    assert_equal(expected,@member1.get_books())
   end
 
   def test_send_overdue_notice
     exception = assert_raise(ArgumentError) {@member1.send_overdue_notice(nil)}
     assert_equal('The overdue notice you are trying to send is nil.',exception.message)
+    puts ''
+    puts 'Expected Output:'
+    puts"\"Laura Ho: Would you kindly please return the books you borrowed recently.  Many Thanks!\""
+    puts 'Actual Output:'
+    @member1.send_overdue_notice('Would you kindly please return the books you borrowed recently.  Many Thanks!')
+    puts ''
   end
 
   ## tests for Library class (:library.rb, :book_collection, :calendar, :member_hash, :library_closed, :current_member)
