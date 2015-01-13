@@ -1,3 +1,5 @@
+#Library Class
+
 require "Set"
 
 class Library
@@ -205,3 +207,117 @@ class Library
     return 'The library is now closed for renovations.'
   end
 end
+
+#Member Class
+
+class Member
+  attr :name, :library, :books
+  attr_accessor :library_card
+
+  def initialize(name,library)
+    @name = name
+    @library = library
+    @books = Set.new()
+    @library_card = false
+  end
+
+  def get_name()
+    return @name
+  end
+
+  def check_out(book)
+    raise ArgumentError.new 'The book that you are trying to check out is nil.' if book.nil?
+    if(@library_card)
+      if(@books.size() < 3)
+        @books.add(book)
+        book.check_out(@library.calendar.get_date() + 7)
+      else
+        puts "Error - member: #{@name} cannot check out this book because he/she has already checked out the max number of books (3)!"
+      end
+    else
+      puts "Error - member: #{@name} cannot check out this book because he/she does not have a valid library card!"
+    end
+  end
+
+  def give_back(book)
+    raise ArgumentError.new 'The book that you are trying to give back is nil.' if book.nil?
+    if(@books.include?(book))
+      book.check_in()
+      @books.delete(book)
+    else
+      puts 'Error - the book you are trying to give back is not currently checked out by this member'
+    end
+  end
+
+  def get_books()
+    return @books
+  end
+
+  def send_overdue_notice(notice)
+    raise ArgumentError.new 'The overdue notice you are trying to send is nil.' if notice.nil?
+    puts "#{@name}: #{notice}"
+  end
+
+end
+
+#Book Class
+
+class Book
+  attr :id, :title, :author, :due_date
+
+  def initialize(id,title,author)
+    @id = id
+    @title = title
+    @author = author
+    @due_date = nil
+  end
+
+  def get_id()
+    return @id
+  end
+
+  def get_title()
+    return @title
+  end
+
+  def get_author()
+    return @author
+  end
+
+  def get_due_date()
+    return @due_date
+  end
+
+  def check_out(due_date)
+    raise ArgumentError.new 'The due date you are trying to set for this book is nil.' if due_date.nil?
+    @due_date = due_date
+  end
+
+  def check_in()
+    @due_date = nil
+  end
+
+  def to_s()
+    return "#{@id}: #{@title}, by #{@author}"
+  end
+end
+
+#Calendar Class
+
+class Calendar
+  attr :day_count
+
+  def initialize()
+    @day_count = 0
+  end
+
+  def get_date()
+    return @day_count
+  end
+
+  def advance()
+    return @day_count += 1
+  end
+
+end
+
