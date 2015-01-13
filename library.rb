@@ -70,7 +70,7 @@ class Library
         return "Library card issued to #{name_of_member}."
       end
     else
-      new_member = Member.new(name_of_member,self)    #could use Hash.store(key,value) instead.  Not sure about use of self here...is self this library object?
+      new_member = Member.new(name_of_member,self)
       new_member.library_card = true
       @member_hash[name_of_member] = new_member
       return "Library card issued to #{name_of_member}."
